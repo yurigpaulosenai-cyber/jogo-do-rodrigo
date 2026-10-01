@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sandbox Roguelike — Engine Test</title>
+  <style>
+    /* ── Reset & Full-Window Canvas ─────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      /* No scrollbars — the canvas IS the viewport */
+      background: #0a0a1a;
+      /* Match the game background while loading */
+    }
+
+    #gameCanvas {
+      display: block;
+      /* Remove inline-element bottom gap */
+      width: 100vw;
+      height: 100vh;
+
+      /*
+       * image-rendering: pixelated
+       *
+       * Critical for 2D pixel-art games. Without this, the browser applies
+       * bilinear filtering when scaling sprites, making pixel art blurry.
+       * 'pixelated' forces nearest-neighbor interpolation.
+       *
+       * Vendor prefixes for cross-browser support:
+       *   -moz-crisp-edges   → Firefox
+       *   -webkit-optimize-contrast → old Safari
+       *   pixelated           → Chrome, Edge, modern Safari
+       */
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: pixelated;
+
+      /* Prevent text selection cursor when dragging over canvas */
+      cursor: crosshair;
+      user-select: none;
+      -webkit-user-select: none;
+
+      /* Disable touch callout on mobile (long-press context menu) */
+      -webkit-touch-callout: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <!--
+    type="module" enables ES6 import/export syntax natively in the browser.
+    No bundler (webpack, vite) needed for development.
+    The browser handles module resolution via relative paths.
+  -->
+  <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
